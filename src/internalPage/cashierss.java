@@ -35,6 +35,8 @@ public class cashierss extends javax.swing.JFrame {
      */
     public cashierss() {
         initComponents();
+        
+        displayData();
     }
         public void reset(){
         pid.setText("");

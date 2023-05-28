@@ -24,6 +24,7 @@ public class addStock extends javax.swing.JInternalFrame {
      */
     public addStock() {
         initComponents();
+        displayData();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
         bi.setNorthPane(null);
@@ -211,7 +212,7 @@ public class addStock extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(update);
-        update.setBounds(320, 390, 90, 30);
+        update.setBounds(340, 390, 90, 30);
 
         insert.setBackground(new java.awt.Color(0, 204, 204));
         insert.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -222,7 +223,7 @@ public class addStock extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(insert);
-        insert.setBounds(220, 390, 90, 30);
+        insert.setBounds(240, 390, 90, 30);
 
         display.setBackground(new java.awt.Color(0, 204, 204));
         display.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -233,7 +234,7 @@ public class addStock extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(display);
-        display.setBounds(120, 390, 90, 30);
+        display.setBounds(140, 390, 90, 30);
 
         delete.setBackground(new java.awt.Color(0, 204, 204));
         delete.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -244,7 +245,7 @@ public class addStock extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(delete);
-        delete.setBounds(420, 390, 90, 30);
+        delete.setBounds(440, 390, 90, 30);
 
         clear.setBackground(new java.awt.Color(0, 204, 204));
         clear.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -255,7 +256,7 @@ public class addStock extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(clear);
-        clear.setBounds(520, 390, 90, 30);
+        clear.setBounds(540, 390, 90, 30);
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -315,7 +316,21 @@ public class addStock extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_displayActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        
+        int rowIndex = tbl_stock.getSelectedRow();
+       if(rowIndex < 0){
+           JOptionPane.showMessageDialog(null, "Please select a data first");
+       }else{
+            TableModel model = tbl_stock.getModel();
+            Object value = model.getValueAt(rowIndex, 0);
+            String id = value.toString();
+             int a=JOptionPane.showConfirmDialog(null,"Are you sure?");  
+                    if(a==JOptionPane.YES_OPTION){  
+                            db_configuration dbc = new db_configuration();
+                            dbc.deletedData(Integer.parseInt(id));
+                            displayData();
+                            reset();
+                    }    
+       }       
     }//GEN-LAST:event_deleteActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed

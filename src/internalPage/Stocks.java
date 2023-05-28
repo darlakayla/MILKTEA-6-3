@@ -32,6 +32,7 @@ public class Stocks extends javax.swing.JInternalFrame {
      */
     public Stocks() {
         initComponents();
+        displayData();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi=(BasicInternalFrameUI)this.getUI();
         bi.setNorthPane(null);
