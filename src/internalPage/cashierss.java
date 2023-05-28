@@ -6,11 +6,21 @@
 package internalPage;
 
 import config.db_configuration;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 
@@ -27,7 +37,7 @@ public class cashierss extends javax.swing.JFrame {
         initComponents();
     }
         public void reset(){
-        id.setText("");
+        pid.setText("");
         firstname.setText("");
         lastname.setText("");
         gender.setText("");
@@ -35,8 +45,168 @@ public class cashierss extends javax.swing.JFrame {
         date.setText("");
         
     }
-    
-    
+        public byte[] imageBytes;
+    String path;
+    String action;
+    String filename=null;
+    String imgPath = null;
+    byte[] person_image = null; 
+    DefaultTableModel model;
+    private Connection con;
+        
+    public  ImageIcon ResizeImage(String ImagePath, byte[] pic) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(picv.getWidth(), picv.getHeight(), Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}    
+    public boolean validation(){
+        String fname= firstname.getText();
+        String lname= lastname.getText();
+        String gend= gender.getText();
+        String stat= status.getText();
+        String trans= date.getText();
+
+ if (firstname.equals("")){
+ JOptionPane.showMessageDialog(this, "PLEASE ENTER YOUR FIRSTNAME");
+ return false;
+ }
+ if(lastname.equals("")){
+ JOptionPane.showMessageDialog(this, "PLEASE ENTER YOUR LASTNAME");
+ return false;
+ }
+if(gender.equals("")){
+ JOptionPane.showMessageDialog(this, "PLEASE ENTER YOUR GENDER");
+ return false;
+ }     
+ if(status.equals("")){
+ JOptionPane.showMessageDialog(this, "PLEASE ENTER YOUR STATUS");
+ return false;
+ }if(date.equals("")){
+ JOptionPane.showMessageDialog(this, "PLEASE ENTER THE TRANSACTION DATE");
+ return false;
+ }
+  
+    if(picv.getIcon()==null){
+ JOptionPane.showMessageDialog(this, "PLEASE ENTER PHOTO");
+ return false;
+ }
+   return true;  
+ }
+    public void add(){
+      try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/milktea_db","root","");
+            String sql = "INSERT INTO tbl_cashier ( c_firstname, c_lastname, c_gender , c_status, c_transactdate, c_image) VALUES (?,?,?,?,?,?)"; 
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            pst.setString(1, firstname.getText());
+            pst.setString(2, lastname.getText());
+            pst.setString(3, gender.getText());
+            pst.setString(4, status.getText()); 
+            pst.setString(5, date.getText());
+            pst.setBytes(6, pic);
+            pst.executeUpdate();
+           
+            displayData();
+               reset(); 
+        JOptionPane.showMessageDialog(this, "SUCCESSFULLY SAVE");
+            }catch(SQLException e){
+                System.err.println("Cannot connect to database: " + e.getMessage());
+            }
+     
+     }
+        public void update(){
+         try {
+         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/milktea_db","root","");
+         int row =tablecashier.getSelectedRow();
+         String value = (tablecashier.getModel().getValueAt(row, 0).toString());
+         String sql = "UPDATE tbl_cashier SET c_firstname=?, c_lastname=?, c_gender=?, c_status=?, c_transactdate=?, c_image=? where c_id="+value;
+            PreparedStatement pst = con.prepareStatement(sql);
+           
+            pst.setString(1, firstname.getText());
+            pst.setString(2, lastname.getText());
+            pst.setString(3, gender.getText());
+            pst.setString(4, status.getText());
+            pst.setString(5, date.getText());
+            pst.setBytes(6, pic);
+            pst.executeUpdate();
+           if(row == 0){
+            JOptionPane.showMessageDialog(null, "Updated FAILED!");
+        }else{
+           JOptionPane.showMessageDialog(null, "Updated Successfully!");
+           displayData();
+           reset();
+        }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
+        public void upload(){
+     JFileChooser chose = new JFileChooser();
+     chose.showOpenDialog(null);
+     File f = chose.getSelectedFile();
+         filename = f.getAbsolutePath();
+         ImageIcon ii = new ImageIcon(filename);
+         Image img = ii.getImage().getScaledInstance(picv.getWidth(), picv.getHeight(), Image.SCALE_SMOOTH);
+     picv.setIcon(new ImageIcon(img));
+         try {
+             File ig = new File(filename);
+             FileInputStream is = new FileInputStream(ig);
+             ByteArrayOutputStream bos =  new ByteArrayOutputStream();
+             byte[] buf = new byte [1024];
+             for (int rnum; (rnum = is.read(buf))!=-1;){
+             bos.write(buf, 0, rnum);
+             }
+             pic =bos.toByteArray();
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, e);
+         }
+          
+    }
+        public void table(){
+            int row = tablecashier.getSelectedRow();
+            int cc = tablecashier.getSelectedColumn();
+            String tc = tablecashier.getModel().getValueAt(row, 0).toString();
+             try{
+            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/milktea_db","root","");
+             String sql = "select * from tbl_cashier where c_id="+tc+"";
+             PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+            int id=rs.getInt("c_id");
+            String fname=rs.getString("c_firstname");
+            String lname=rs.getString("c_lastname");
+            String gend=rs.getString("c_gender");
+            String stat=rs.getString("c_status");
+            String dat=rs.getString("c_transactdate");
+        
+            byte[] img = rs.getBytes("c_image");
+            format = new ImageIcon(img);
+            Image im =format.getImage().getScaledInstance(picv.getWidth(), picv.getHeight(), Image.SCALE_SMOOTH);
+            picv.setIcon(new ImageIcon(im));
+            
+            
+                pid.setText(""+id);
+                firstname.setText(fname);
+                lastname.setText(lname);
+                gender.setText(gend);
+                status.setText(stat);
+                date.setText(dat);
+           
+         
+            }
+             pst.close();
+             rs.close();
+         } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+         }
+        }
     
     
         public void displayData(){
@@ -66,12 +236,11 @@ public class cashierss extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         date = new javax.swing.JTextField();
-        id = new javax.swing.JTextField();
+        pid = new javax.swing.JTextField();
         lastname = new javax.swing.JTextField();
         status = new javax.swing.JTextField();
         delete = new javax.swing.JButton();
         insert = new javax.swing.JButton();
-        display = new javax.swing.JButton();
         clear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablecashier = new javax.swing.JTable();
@@ -89,6 +258,10 @@ public class cashierss extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         display1 = new javax.swing.JButton();
+        browse = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        picv = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -103,17 +276,17 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(date);
-        date.setBounds(160, 310, 270, 30);
+        date.setBounds(160, 300, 270, 30);
 
-        id.setEditable(false);
-        id.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        id.addActionListener(new java.awt.event.ActionListener() {
+        pid.setEditable(false);
+        pid.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        pid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idActionPerformed(evt);
+                pidActionPerformed(evt);
             }
         });
-        jPanel2.add(id);
-        id.setBounds(160, 110, 270, 30);
+        jPanel2.add(pid);
+        pid.setBounds(160, 100, 270, 30);
 
         lastname.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lastname.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +295,7 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(lastname);
-        lastname.setBounds(160, 190, 270, 30);
+        lastname.setBounds(160, 180, 270, 30);
 
         status.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         status.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +304,7 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(status);
-        status.setBounds(160, 270, 270, 30);
+        status.setBounds(160, 260, 270, 30);
 
         delete.setBackground(new java.awt.Color(0, 204, 204));
         delete.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -142,29 +315,18 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(delete);
-        delete.setBounds(240, 410, 90, 30);
+        delete.setBounds(400, 60, 90, 30);
 
         insert.setBackground(new java.awt.Color(0, 204, 204));
         insert.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        insert.setText("INSERT");
+        insert.setText("ADD");
         insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertActionPerformed(evt);
             }
         });
         jPanel2.add(insert);
-        insert.setBounds(240, 370, 90, 30);
-
-        display.setBackground(new java.awt.Color(0, 204, 204));
-        display.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        display.setText("BACK");
-        display.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                displayActionPerformed(evt);
-            }
-        });
-        jPanel2.add(display);
-        display.setBounds(140, 410, 90, 30);
+        insert.setBounds(600, 60, 90, 30);
 
         clear.setBackground(new java.awt.Color(0, 204, 204));
         clear.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -175,7 +337,7 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(clear);
-        clear.setBounds(340, 410, 90, 30);
+        clear.setBounds(500, 60, 90, 30);
 
         tablecashier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -185,7 +347,7 @@ public class cashierss extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablecashier);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(460, 90, 410, 360);
+        jScrollPane1.setBounds(470, 100, 420, 360);
 
         update.setBackground(new java.awt.Color(0, 204, 204));
         update.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -196,43 +358,43 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(update);
-        update.setBounds(340, 370, 90, 30);
+        update.setBounds(700, 60, 90, 30);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("ID:");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(40, 110, 120, 30);
+        jLabel3.setBounds(40, 100, 120, 30);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("First Name:");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(40, 150, 120, 30);
+        jLabel4.setBounds(40, 140, 120, 30);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Last Name:");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(40, 190, 120, 30);
+        jLabel5.setBounds(40, 180, 120, 30);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Gender:");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(40, 230, 120, 30);
+        jLabel6.setBounds(40, 220, 120, 30);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Status:");
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(40, 270, 120, 30);
+        jLabel7.setBounds(40, 260, 120, 30);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Transaction Date:");
+        jLabel2.setText("Upload Image:");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(40, 310, 120, 30);
+        jLabel2.setBounds(40, 340, 120, 30);
 
         firstname.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         firstname.addActionListener(new java.awt.event.ActionListener() {
@@ -241,11 +403,11 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(firstname);
-        firstname.setBounds(160, 150, 270, 30);
+        firstname.setBounds(160, 140, 270, 30);
 
         gender.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel2.add(gender);
-        gender.setBounds(160, 230, 270, 30);
+        gender.setBounds(160, 220, 270, 30);
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 204));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -290,7 +452,31 @@ public class cashierss extends javax.swing.JFrame {
             }
         });
         jPanel2.add(display1);
-        display1.setBounds(140, 370, 90, 30);
+        display1.setBounds(800, 60, 90, 30);
+
+        browse.setBackground(new java.awt.Color(0, 204, 204));
+        browse.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        browse.setText("BROWSE");
+        browse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseActionPerformed(evt);
+            }
+        });
+        jPanel2.add(browse);
+        browse.setBounds(310, 440, 90, 30);
+
+        jPanel1.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(picv, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 130));
+
+        jPanel2.add(jPanel1);
+        jPanel1.setBounds(160, 340, 140, 130);
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Transaction Date:");
+        jPanel2.add(jLabel11);
+        jLabel11.setBounds(40, 300, 120, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -313,9 +499,9 @@ public class cashierss extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dateActionPerformed
 
-    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+    private void pidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pidActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idActionPerformed
+    }//GEN-LAST:event_pidActionPerformed
 
     private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
         // TODO add your handling code here:
@@ -329,68 +515,19 @@ public class cashierss extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_firstnameActionPerformed
 
-    private void displayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayActionPerformed
-
-    }//GEN-LAST:event_displayActionPerformed
-
     private void tablecashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablecashierMouseClicked
-        int rowIndex = tablecashier.getSelectedRow();
-        if(rowIndex < 0){
-            
-        }else{
-            TableModel model = tablecashier.getModel();
-            id.setText(""+model.getValueAt(rowIndex,0));
-            firstname.setText(""+model.getValueAt(rowIndex,1));
-            lastname.setText(""+model.getValueAt(rowIndex,2));
-            gender.setText(""+model.getValueAt(rowIndex,3));
-            status.setText(""+model.getValueAt(rowIndex,4));
-            date.setText(""+model.getValueAt(rowIndex,5));
-
-            
-        }
+        table();
     }//GEN-LAST:event_tablecashierMouseClicked
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
-        
-        if (firstname.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please type your Firstname!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if(lastname.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please type your Lastname", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if (gender.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please type your Gender!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if(status.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please type your Status!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;      
-        }else if(date.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please type the Transaction Date!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;      
-        }           
-        
-        
-        
-        db_configuration dbc = new db_configuration();
-        dbc.insertData("INSERT INTO tbl_cashier(c_firstname, c_lastname, c_gender,c_status, c_transactdate) "
-                + "VALUES ('"+firstname.getText()+"', '"+lastname.getText()+"','"+gender.getText()+"','"+status.getText()+"','"+date.getText()+"')");
-        displayData();
-        reset();
+        if (validation () == true){
+         add();
+     }
     }//GEN-LAST:event_insertActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        db_configuration dbc = new db_configuration();
-        int num = dbc.updateData("UPDATE tbl_cashier "
-                + "SET c_firstname= '"+firstname.getText()+"', c_lastname='"+lastname.getText()+"', "
-                        + "c_gender='"+gender.getText()+"', c_status='"+status.getText()+"', c_transactdate='"+date.getText()+"' "
-                                + "WHERE c_id = '"+id.getText()+"'");
-       
-        if(num == 0){
-           
-        }else{
-           JOptionPane.showMessageDialog(null, "Updated Successfully!");
-           displayData();
-           reset();
+        if(validation()== true){
+     update();
         }
     }//GEN-LAST:event_updateActionPerformed
 
@@ -431,6 +568,10 @@ public class cashierss extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_display1ActionPerformed
 
+    private void browseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseActionPerformed
+        upload();
+    }//GEN-LAST:event_browseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -467,16 +608,16 @@ public class cashierss extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton browse;
     private javax.swing.JButton clear;
     private javax.swing.JTextField date;
     private javax.swing.JButton delete;
-    private javax.swing.JButton display;
     private javax.swing.JButton display1;
     private javax.swing.JTextField firstname;
     private javax.swing.JTextField gender;
-    private javax.swing.JTextField id;
     private javax.swing.JButton insert;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -485,12 +626,20 @@ public class cashierss extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lastname;
+    private javax.swing.JLabel picv;
+    private javax.swing.JTextField pid;
     private javax.swing.JTextField status;
     private javax.swing.JTable tablecashier;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
+String filen= null;
+byte[] pic = null; 
+private ImageIcon format = null;
+
 }
+

@@ -83,6 +83,7 @@ public class loginForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         login = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        forgot = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -121,7 +122,7 @@ public class loginForm extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 380, 30));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 380, 30));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,7 +177,7 @@ public class loginForm extends javax.swing.JFrame {
         jLabel7.setText("CANCEL");
         cancel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 40));
 
-        jPanel3.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 120, 40));
+        jPanel3.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 120, 40));
 
         login.setBackground(new java.awt.Color(0, 204, 204));
         login.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -198,7 +199,17 @@ public class loginForm extends javax.swing.JFrame {
         jLabel8.setText("LOGIN");
         login.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 40));
 
-        jPanel3.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, -1, -1));
+        jPanel3.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 120, 40));
+
+        forgot.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        forgot.setForeground(new java.awt.Color(255, 255, 255));
+        forgot.setText("Forgot Password?");
+        forgot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgotMouseClicked(evt);
+            }
+        });
+        jPanel3.add(forgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 120, 20));
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(370, 0, 380, 430);
@@ -303,6 +314,12 @@ public class loginForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_loginMouseClicked
 
+    private void forgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotMouseClicked
+        changePass cp = new changePass();
+        cp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_forgotMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -340,6 +357,7 @@ public class loginForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cancel;
+    private javax.swing.JLabel forgot;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

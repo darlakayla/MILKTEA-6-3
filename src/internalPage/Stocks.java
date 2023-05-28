@@ -115,7 +115,7 @@ public class Stocks extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(milktea_table);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 100, 690, 140);
+        jScrollPane1.setBounds(30, 90, 670, 140);
 
         DELETE.setBackground(new java.awt.Color(0, 204, 204));
         DELETE.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -231,7 +231,7 @@ public class Stocks extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(save);
-        save.setBounds(630, 60, 90, 30);
+        save.setBounds(620, 50, 90, 30);
 
         jPanel2.setBackground(new java.awt.Color(0, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
