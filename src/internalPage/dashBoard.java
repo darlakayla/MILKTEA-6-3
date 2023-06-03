@@ -39,15 +39,17 @@ public class dashBoard extends javax.swing.JFrame {
         navbar = new javax.swing.JPanel();
         dashpane1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        addstocks = new javax.swing.JPanel();
+        cashier = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         inventory = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         settings = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         stocks = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        products = new javax.swing.JLabel();
         userni = new javax.swing.JLabel();
+        reportt = new javax.swing.JPanel();
+        reports = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -86,27 +88,27 @@ public class dashBoard extends javax.swing.JFrame {
 
         navbar.add(dashpane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 180, 40));
 
-        addstocks.setBackground(new java.awt.Color(0, 102, 102));
-        addstocks.addMouseListener(new java.awt.event.MouseAdapter() {
+        cashier.setBackground(new java.awt.Color(0, 102, 102));
+        cashier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addstocksMouseClicked(evt);
+                cashierMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addstocksMouseEntered(evt);
+                cashierMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                addstocksMouseExited(evt);
+                cashierMouseExited(evt);
             }
         });
-        addstocks.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cashier.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("ADD STOCKS");
-        addstocks.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
+        jLabel3.setText("CASHIER");
+        cashier.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
 
-        navbar.add(addstocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 180, 40));
+        navbar.add(cashier, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 180, 40));
 
         inventory.setBackground(new java.awt.Color(0, 102, 102));
         inventory.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -125,7 +127,7 @@ public class dashBoard extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("INVENTORY");
+        jLabel8.setText("ORDER");
         inventory.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
 
         navbar.add(inventory, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 180, 40));
@@ -166,11 +168,11 @@ public class dashBoard extends javax.swing.JFrame {
         });
         stocks.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("STOCKS");
-        stocks.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
+        products.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        products.setForeground(new java.awt.Color(255, 255, 255));
+        products.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        products.setText("PRODUCTS");
+        stocks.add(products, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
 
         navbar.add(stocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 180, 40));
 
@@ -178,6 +180,47 @@ public class dashBoard extends javax.swing.JFrame {
         userni.setForeground(new java.awt.Color(255, 255, 255));
         userni.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         navbar.add(userni, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 150, 30));
+
+        reportt.setBackground(new java.awt.Color(0, 102, 102));
+        reportt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reporttMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reporttMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reporttMouseExited(evt);
+            }
+        });
+
+        reports.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        reports.setForeground(new java.awt.Color(255, 255, 255));
+        reports.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        reports.setText("REPORTS");
+
+        javax.swing.GroupLayout reporttLayout = new javax.swing.GroupLayout(reportt);
+        reportt.setLayout(reporttLayout);
+        reporttLayout.setHorizontalGroup(
+            reporttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+            .addGroup(reporttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(reporttLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(reports, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        reporttLayout.setVerticalGroup(
+            reporttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(reporttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(reporttLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(reports, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        navbar.add(reportt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 180, 40));
 
         jPanel1.add(navbar);
         navbar.setBounds(0, 0, 180, 480);
@@ -214,7 +257,7 @@ public class dashBoard extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MILKTEA SALES TRACKER");
         header.add(jLabel1);
-        jLabel1.setBounds(110, 0, 550, 40);
+        jLabel1.setBounds(120, 0, 550, 40);
 
         jPanel1.add(header);
         header.setBounds(180, 0, 740, 40);
@@ -279,7 +322,7 @@ public class dashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_inventoryMouseExited
 
     private void inventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseClicked
-        Reports in = new Reports();
+        ORDER in = new ORDER();
         maindesktop.add(in).setVisible(true);
     }//GEN-LAST:event_inventoryMouseClicked
 
@@ -296,13 +339,13 @@ public class dashBoard extends javax.swing.JFrame {
        settings.setBackground(navcolor);
     }//GEN-LAST:event_settingsMouseExited
 
-    private void addstocksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addstocksMouseExited
-        addstocks.setBackground(navcolor);
-    }//GEN-LAST:event_addstocksMouseExited
+    private void cashierMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseExited
+        cashier.setBackground(navcolor);
+    }//GEN-LAST:event_cashierMouseExited
 
-    private void addstocksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addstocksMouseEntered
-        addstocks.setBackground(bodycolor);
-    }//GEN-LAST:event_addstocksMouseEntered
+    private void cashierMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseEntered
+        cashier.setBackground(bodycolor);
+    }//GEN-LAST:event_cashierMouseEntered
 
     private void stocksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stocksMouseEntered
          stocks.setBackground(bodycolor);
@@ -312,15 +355,29 @@ public class dashBoard extends javax.swing.JFrame {
         stocks.setBackground(navcolor);
     }//GEN-LAST:event_stocksMouseExited
 
-    private void addstocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addstocksMouseClicked
-        addStock ad = new addStock();
-        maindesktop.add(ad).setVisible(true);
-    }//GEN-LAST:event_addstocksMouseClicked
+    private void cashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseClicked
+        cashierss cs = new cashierss();
+        cs.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cashierMouseClicked
 
     private void stocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stocksMouseClicked
-       Stocks st = new Stocks();
+       Products st = new Products();
        maindesktop.add(st).setVisible(true);
     }//GEN-LAST:event_stocksMouseClicked
+
+    private void reporttMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporttMouseClicked
+      reports rp = new reports();
+      maindesktop.add (rp).setVisible(true);
+    }//GEN-LAST:event_reporttMouseClicked
+
+    private void reporttMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporttMouseEntered
+      reports.setBackground(bodycolor);
+    }//GEN-LAST:event_reporttMouseEntered
+
+    private void reporttMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporttMouseExited
+        reports.setBackground(navcolor);
+    }//GEN-LAST:event_reporttMouseExited
 
     /**
      * @param args the command line arguments
@@ -358,14 +415,13 @@ public class dashBoard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addstocks;
+    private javax.swing.JPanel cashier;
     private javax.swing.JPanel dashpane1;
     private javax.swing.JPanel header;
     private javax.swing.JPanel inventory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -374,6 +430,9 @@ public class dashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel navbar;
+    private javax.swing.JLabel products;
+    private javax.swing.JLabel reports;
+    private javax.swing.JPanel reportt;
     private javax.swing.JPanel settings;
     private javax.swing.JPanel stocks;
     public static javax.swing.JLabel userni;

@@ -6,19 +6,27 @@
 package internalPage;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Date;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author SCC-COMLAB
  */
 public class dashBoardPages extends javax.swing.JInternalFrame {
-
+  private Connection con;
+  DefaultTableModel model;
     /**
      * Creates new form dashBoardPages
      */
     public dashBoardPages() {
         initComponents();
+        total();
         
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
@@ -28,6 +36,31 @@ public class dashBoardPages extends javax.swing.JInternalFrame {
     Color navcolor= new Color(0,102,102);
     Color headcolor= new Color(0,204,204);
     Color bodycolor = new Color(0,153,153);
+    
+    
+    public void total(){
+     PreparedStatement st = null;
+     ResultSet rs = null;
+     
+     long l = System.currentTimeMillis();
+     Date todaydate = new Date(l);
+
+      try {
+           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/milktea_db", "root", "");
+           st = con.prepareStatement("SELECT COUNT(*) FROM tbl_residentrecords");
+           rs = st.executeQuery();
+          while (rs.next()){
+              int count = rs.getInt(1);
+             
+          total.setText(String.valueOf(count));  
+          }
+                          
+      } catch (Exception e) {
+      e.printStackTrace();
+      }
+ 
+ 
+  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,6 +78,7 @@ public class dashBoardPages extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -81,6 +115,9 @@ public class dashBoardPages extends javax.swing.JInternalFrame {
         jLabel4.setText("TOTAL SALES");
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 150, 30));
 
+        total.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 60, 40));
+
         jPanel1.add(jPanel3);
         jPanel3.setBounds(70, 160, 260, 110);
 
@@ -98,5 +135,6 @@ public class dashBoardPages extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

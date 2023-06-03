@@ -260,10 +260,11 @@ if(gender.equals("")){
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         display1 = new javax.swing.JButton();
-        browse = new javax.swing.JButton();
+        back = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         picv = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        browse1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -349,7 +350,7 @@ if(gender.equals("")){
         jScrollPane1.setViewportView(tablecashier);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(470, 100, 420, 360);
+        jScrollPane1.setBounds(470, 100, 420, 270);
 
         update.setBackground(new java.awt.Color(0, 204, 204));
         update.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -456,16 +457,16 @@ if(gender.equals("")){
         jPanel2.add(display1);
         display1.setBounds(800, 60, 90, 30);
 
-        browse.setBackground(new java.awt.Color(0, 204, 204));
-        browse.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        browse.setText("BROWSE");
-        browse.addActionListener(new java.awt.event.ActionListener() {
+        back.setBackground(new java.awt.Color(0, 204, 204));
+        back.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        back.setText("BACK");
+        back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                browseActionPerformed(evt);
+                backActionPerformed(evt);
             }
         });
-        jPanel2.add(browse);
-        browse.setBounds(310, 440, 90, 30);
+        jPanel2.add(back);
+        back.setBounds(790, 440, 90, 30);
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -479,6 +480,17 @@ if(gender.equals("")){
         jLabel11.setText("Transaction Date:");
         jPanel2.add(jLabel11);
         jLabel11.setBounds(40, 300, 120, 30);
+
+        browse1.setBackground(new java.awt.Color(0, 204, 204));
+        browse1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        browse1.setText("BROWSE");
+        browse1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browse1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(browse1);
+        browse1.setBounds(310, 440, 90, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -570,9 +582,15 @@ if(gender.equals("")){
         // TODO add your handling code here:
     }//GEN-LAST:event_display1ActionPerformed
 
-    private void browseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseActionPerformed
-        upload();
-    }//GEN-LAST:event_browseActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        dashBoard db = new dashBoard();
+        db.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backActionPerformed
+
+    private void browse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browse1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browse1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -610,7 +628,8 @@ if(gender.equals("")){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton browse;
+    private javax.swing.JButton back;
+    private javax.swing.JButton browse1;
     private javax.swing.JButton clear;
     private javax.swing.JTextField date;
     private javax.swing.JButton delete;

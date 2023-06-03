@@ -25,12 +25,12 @@ import net.proteanit.sql.DbUtils;
  *
  * @author SCC-COMLAB
  */
-public class Stocks extends javax.swing.JInternalFrame {
+public class Products extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Stocks
      */
-    public Stocks() {
+    public Products() {
         initComponents();
         displayData();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -41,9 +41,9 @@ public class Stocks extends javax.swing.JInternalFrame {
     public void reset(){
         mid.setText("");
        mflavor.setText("");
-      mprice.setText("");
-       mquan.setText("");
+      mquan.setText("");
        msize.setText("");
+       mprice.setText("");
         
     }
     public void displayData(){
@@ -74,11 +74,11 @@ public class Stocks extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         milktea_table = new javax.swing.JTable();
         DELETE = new javax.swing.JButton();
-        msize = new javax.swing.JTextField();
+        mprice = new javax.swing.JTextField();
         mid = new javax.swing.JTextField();
         mflavor = new javax.swing.JTextField();
-        mprice = new javax.swing.JTextField();
         mquan = new javax.swing.JTextField();
+        msize = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         update = new javax.swing.JButton();
         insert = new javax.swing.JButton();
@@ -87,7 +87,6 @@ public class Stocks extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        save = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -129,9 +128,9 @@ public class Stocks extends javax.swing.JInternalFrame {
         jPanel1.add(DELETE);
         DELETE.setBounds(560, 370, 90, 30);
 
-        msize.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jPanel1.add(msize);
-        msize.setBounds(440, 290, 230, 30);
+        mprice.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel1.add(mprice);
+        mprice.setBounds(440, 290, 230, 30);
 
         mid.setEditable(false);
         mid.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -144,21 +143,26 @@ public class Stocks extends javax.swing.JInternalFrame {
         mid.setBounds(120, 250, 230, 30);
 
         mflavor.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        mflavor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mflavorActionPerformed(evt);
+            }
+        });
         jPanel1.add(mflavor);
         mflavor.setBounds(120, 290, 230, 30);
 
-        mprice.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        mprice.addActionListener(new java.awt.event.ActionListener() {
+        mquan.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        mquan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mpriceActionPerformed(evt);
+                mquanActionPerformed(evt);
             }
         });
-        jPanel1.add(mprice);
-        mprice.setBounds(120, 330, 230, 30);
-
-        mquan.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel1.add(mquan);
-        mquan.setBounds(440, 250, 230, 30);
+        mquan.setBounds(120, 330, 230, 30);
+
+        msize.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel1.add(msize);
+        msize.setBounds(440, 250, 230, 30);
 
         jButton2.setBackground(new java.awt.Color(0, 204, 204));
         jButton2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -195,7 +199,7 @@ public class Stocks extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Size:");
+        jLabel2.setText("Price:");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(370, 290, 70, 30);
 
@@ -213,26 +217,15 @@ public class Stocks extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Price:");
+        jLabel5.setText("Quantity:");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(50, 330, 70, 30);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Quantity:");
+        jLabel6.setText("Size:");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(370, 250, 70, 30);
-
-        save.setBackground(new java.awt.Color(0, 204, 204));
-        save.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        save.setText("CASHIER");
-        save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveActionPerformed(evt);
-            }
-        });
-        jPanel1.add(save);
-        save.setBounds(620, 50, 90, 30);
 
         jPanel2.setBackground(new java.awt.Color(0, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -240,7 +233,7 @@ public class Stocks extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("STOCKS");
+        jLabel7.setText("PRODUCTS");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 40));
 
         jPanel1.add(jPanel2);
@@ -250,13 +243,17 @@ public class Stocks extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -289,9 +286,9 @@ public class Stocks extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_midActionPerformed
 
-    private void mpriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpriceActionPerformed
+    private void mquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mquanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_mpriceActionPerformed
+    }//GEN-LAST:event_mquanActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
      reset();        
@@ -300,8 +297,8 @@ public class Stocks extends javax.swing.JInternalFrame {
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
        db_configuration dbc = new db_configuration();
         int num = dbc.updateData("UPDATE tbl_milktea "
-                + "SET m_flavor= '"+mflavor.getText()+"', m_price='"+mprice.getText()+"', "
-                        + "m_quan='"+mquan.getText()+"', m_size='"+msize.getText()+"'  "
+                + "SET m_flavor= '"+mflavor.getText()+"', m_price='"+mquan.getText()+"', "
+                        + "m_quan='"+msize.getText()+"', m_size='"+mprice.getText()+"'  "
                                 + "WHERE m_id = '"+mid.getText()+"'");
        
         if(num == 0){
@@ -321,9 +318,9 @@ public class Stocks extends javax.swing.JInternalFrame {
             TableModel model = milktea_table.getModel();
             mid.setText(""+model.getValueAt(rowIndex,0));
             mflavor.setText(""+model.getValueAt(rowIndex,1));
-            mprice.setText(""+model.getValueAt(rowIndex,2));
-            mquan.setText(""+model.getValueAt(rowIndex,3));
-            msize.setText(""+model.getValueAt(rowIndex,4));
+            mquan.setText(""+model.getValueAt(rowIndex,2));
+            msize.setText(""+model.getValueAt(rowIndex,3));
+            mprice.setText(""+model.getValueAt(rowIndex,4));
 
             
         }
@@ -334,31 +331,27 @@ public class Stocks extends javax.swing.JInternalFrame {
         if (mflavor.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please type the Flavor!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }else if(mprice.getText().trim().isEmpty()) {
+        }else if(mquan.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please type the Price", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }else if (mquan.getText().trim().isEmpty()) {
+        }else if (msize.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please type the Quantity!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }else if(msize.getText().trim().isEmpty()) {
+        }else if(mprice.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please type the Size!", "Error", JOptionPane.ERROR_MESSAGE);
             return;      
         }      
             
         db_configuration dbc = new db_configuration();
         dbc.insertData("INSERT INTO tbl_milktea(m_flavor, m_price, m_quan,m_size) "
-                + "VALUES ('"+mflavor.getText()+"', '"+mprice.getText()+"','"+mquan.getText()+"','"+msize.getText()+"')");
+                + "VALUES ('"+mflavor.getText()+"', '"+mquan.getText()+"','"+msize.getText()+"','"+mprice.getText()+"')");
         displayData();
         reset();
     }//GEN-LAST:event_insertActionPerformed
 
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        JFrame mainFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
-        mainFrame.dispose();       
-        cashierss ca = new cashierss();
-        ca.setVisible(true);
-        
-    }//GEN-LAST:event_saveActionPerformed
+    private void mflavorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mflavorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mflavorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -381,7 +374,6 @@ public class Stocks extends javax.swing.JInternalFrame {
     private javax.swing.JTextField mprice;
     private javax.swing.JTextField mquan;
     private javax.swing.JTextField msize;
-    private javax.swing.JButton save;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
